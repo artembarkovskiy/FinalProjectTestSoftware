@@ -23,6 +23,6 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        "load-test-report.html": htmlReport(data),
+        "spike-test-report.html": htmlReport(data),
     };
 }

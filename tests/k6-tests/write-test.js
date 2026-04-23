@@ -44,6 +44,6 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        "load-test-report.html": htmlReport(data), 
+        "write-test-report.html": htmlReport(data), 
     };
 }

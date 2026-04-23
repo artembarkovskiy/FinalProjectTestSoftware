@@ -5,10 +5,10 @@ public class Ingredient
     public Guid Id { get; private set; }
     public Guid RecipeId { get; private set; }
     public string Name { get; private set; }
-    public decimal Quantity { get; private set; }
-    public string Unit { get; private set; }
+    public decimal Quantity { get; private set; } //кількість
+    public string Unit { get; private set; } //одиниця вимірювання
     
-    public Recipe? Recipe { get; private set; }
+    public Recipe? Recipe { get; private set; } // рецепти до яких відноситься інгрідієнт
     
     protected Ingredient() { }
 

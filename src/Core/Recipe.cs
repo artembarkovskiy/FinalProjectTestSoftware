@@ -5,9 +5,9 @@ public class Recipe
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }
-    public int PrepTimeMinutes { get; private set; }
+    public int PrepTimeMinutes { get; private set; } // умовний час підготовки
     public int CookTimeMinutes { get; private set; }
-    public int Servings { get; private set; }
+    public int Servings { get; private set; } // порції
     public Difficulty Difficulty { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
