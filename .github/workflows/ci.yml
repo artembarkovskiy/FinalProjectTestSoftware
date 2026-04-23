@@ -1,4 +1,4 @@
-﻿name: Flight Booking CI Pipeline
+﻿name: Recipe Manager CI Pipeline
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: TestPassword123!
-          POSTGRES_DB: flight_booking_test_db
+          POSTGRES_DB: RecipeManagerDb
         ports:
           - 5432:5432
         options: >-
@@ -65,7 +65,7 @@ jobs:
           dotnet run --project src/Api --configuration Release &
           sleep 15
         env:
-          ConnectionStrings__DefaultConnection: "Host=localhost;Database=flight_booking_test_db;Username=postgres;Password=TestPassword123!"
+          ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=RecipeManagerDb;Username=postgres;Password=TestPassword123!"
 
       - name: Install k6
         run: |
