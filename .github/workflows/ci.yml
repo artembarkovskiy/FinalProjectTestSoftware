@@ -76,4 +76,4 @@ jobs:
           sudo apt-get install k6
 
       - name: Run k6 Smoke Test
-        run: k6 run tests/k6-tests/smoke.js 
+        run: k6 run tests/k6-tests/smoke.js  
