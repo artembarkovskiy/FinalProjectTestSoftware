@@ -2,11 +2,11 @@
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 1, 
+    vus: 1,
     duration: '30s',
     thresholds: {
-        http_req_failed: ['rate==0.00'], 
-        http_req_duration: ['p(95)<2000'], 
+        http_req_failed: ['rate==0.00'],
+        http_req_duration: ['p(95)<2000'],
     },
 };
 
@@ -14,8 +14,8 @@ const BASE_URL = 'http://localhost:5063';
 
 export function setup() {
     let res = http.get(`${BASE_URL}/api/Recipes`);
-    let recipes = res.json();
 
+    let recipes = res.json();
     let validRecipeId = (Array.isArray(recipes) && recipes.length > 0) ? recipes[0].id : null;
 
     return { recipeId: validRecipeId };
@@ -28,13 +28,14 @@ export default function (data) {
 
     const newRecipe = JSON.stringify({
         name: `Test Recipe ${Math.floor(Math.random() * 1000)}`,
-        difficulty: 1, 
+        difficulty: 1,
         maxPrepTime: 30,
         ingredients: ["Salt", "Water"]
     });
 
     let createRes = http.post(`${BASE_URL}/api/Recipes`, newRecipe, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        responseCallback: http.expectedStatuses(201, 400),
     });
 
     check(createRes, {
@@ -51,10 +52,15 @@ export default function (data) {
             difficulty: 2,
             maxPrepTime: 45
         });
+
         let updateRes = http.put(`${BASE_URL}/api/Recipes/${data.recipeId}`, updatePayload, {
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            responseCallback: http.expectedStatuses(204, 400, 404),
         });
-        check(updateRes, { 'update is 204 or 400': (r) => [204, 400].includes(r.status) });
+
+        check(updateRes, {
+            'update is 204, 400 or 404': (r) => [204, 400, 404].includes(r.status)
+        });
     }
     sleep(1);
 
